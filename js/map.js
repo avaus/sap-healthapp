@@ -52,7 +52,7 @@
       if (diseasePreSets[key]) {
         heatMaps[key] = createRandomHeatMap.apply(this, diseasePreSets[key]);
       } else {
-        heatMaps[key] = createRandomHeatMap(helsinki, 0.05, 100);
+        heatMaps[key] = createRandomHeatMap(helsinki, 0.03, 50 + Math.random() * 200);
       }
     } 
 
