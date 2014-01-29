@@ -1,0 +1,192 @@
+@charset "UTF-8";
+
+@import "compass/css3";
+@import "compass/utilities/sprites/base";
+
+$icon-array: arrow-dropdown, arrow-left, arrow-right, bug, bug-violet-no-shadow, button-bandaid, button-bug-active, button-cloud, button-pill-active, heart, people, pill, pill-blue, pill-violet, plus, search, spot;
+$icons: sprite-map("icon/*.png", $spacing: 10px, $layout: vertical);
+
+
+$color-00: rgba(255, 255, 255, 1); // #fff
+$color-01: rgba(31, 165, 190, 1); // #1fa5be; light bg
+$color-02: rgba(7, 126, 147, 1); // #077e93; dark bg
+$color-03: rgba(64, 178, 200, 1); // #40b2c8; light border
+$color-04: rgba(6, 117, 136, 1); // #067588; dark border
+$color-05: rgba(25, 135, 155, 1); // #19879b; light border
+
+
+%box {
+	background: $color-00;
+	@include border-radius(4px);
+	@include box-shadow(0 2px 3px rgba(0,0,0,.2));
+	}
+
+
+a {
+	text-decoration: none; color: $color-00;
+	&:visited { color: $color-00; }
+	&:hover, &:focus, &:active { color: $color-00; }
+	}
+
+
+html, body { height: 100%; }
+body { color: $color-00; background: $color-01 url(../img/bg/pattern.png) repeat 0 0; }
+header { background: $color-02; }
+
+.container { max-width: 320px; padding: 0 10px; }
+
+
+/* HEADER */
+	header {
+		> .container {
+			display: table; width: 100%; padding: 0;
+			> div {
+				display: table-cell; vertical-align: middle; border-right: 1px solid $color-04; border-left: 1px solid $color-05;
+				&:first-child { padding-left: 20px; border-left: 0; }
+				&:last-child { border-right: 0; }
+				}
+			}
+		@include box-shadow(0 5px rgba(255,255,255,.15));
+		}
+
+	header + section { margin-top: 5px; }
+
+	.app-title { margin: 0; font-size: 24px; font-weight: 700; @include text-shadow(0 1px 1px rgba(0,0,0,.3)); }
+/* /end HEADER */
+
+
+.control {
+	width: 60px; height: 60px;
+	> a { width: 60px; height: 60px; }
+	}
+
+
+.button { display: inline-block; }
+.button--icon-inside {
+	position: relative; display: block; text-indent: -90000px; overflow: hidden;
+	> .icon { position: absolute; top: 50%; left: 50%; }
+	}
+.button--icon {
+	padding: 0; border: 0;
+	}
+
+
+/* ICONS */
+	.icon { display: block; background: sprite-url($icons) no-repeat 0 0; }
+	.inline--icon {
+		display: inline-block;
+		.icon { display: inline-block; margin-right: 6px; vertical-align: middle; }
+		}
+	.inline--icon-right {
+		.icon { margin-right: 0; margin-left: 6px; }
+		}
+
+	@each $icon-name in $icon-array {
+		.icon--#{$icon-name} {
+			$width: ceil(image-width(sprite-file($icons, #{$icon-name})) / 2);
+			$height: ceil(image-height(sprite-file($icons, #{$icon-name})) / 2);
+			$ypos: round(nth(sprite-position($icons, #{$icon-name}), 2) / 2);
+			width: $width; height: $height; background-position: 0 $ypos;
+			background-size: ceil(image-width(sprite-path($icons)) / 2) auto;
+			.button--icon-inside & {
+				margin-top: -0.5 * $height;
+				margin-left: -0.5 * $width;
+				}
+			}
+		}
+/* /end ICONS */
+
+
+.person-name { position: absolute; top: 0; right: 0; left: 0; height: ceil(1.1 * 28px); margin: ((85 - ceil(1.1 * 28px)) / 2) 25px 0 25px; font-size: 28px; @include text-shadow(0 1px 1px rgba(0,0,0,.2)); text-align: center; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+
+.person {
+	position: relative; height: 85px;
+	.button--icon { position: relative; top: 50%;}
+	.icon--arrow-left { margin-top: -0.5 * ceil(image-height(sprite-file($icons, arrow-left)) / 2); }
+	.icon--arrow-right { margin-top: -0.5 * ceil(image-height(sprite-file($icons, arrow-right)) / 2); }
+	}
+
+
+.btn-group-full {
+	display: block; width: 100%;
+	> .btn { display: block; float: none; width: 100%; }
+	}
+
+.dropdown-toggle {
+	@extend %box; height: 60px; padding: 0 20px; color: $color-01; font-size: 18px; line-height: 60px; border: 0; text-align: left; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
+	.icon { position: absolute; top: 50%; right: 20px; display: block; margin-top: -0.5 * ceil(image-height(sprite-file($icons, arrow-dropdown)) / 2);}
+	&:hover, &:focus, &:active { background: $color-00; color: $color-01; }
+	}
+
+.btn-group.open .dropdown-toggle {
+	background: $color-00; color: $color-01; @include box-shadow(none);
+	}
+
+
+#visual {
+	position: relative; min-height: 240px; margin: 35px 0;
+	> .canvas {
+		position: absolute; top: 0; right: 0; left: 0;
+		.icon { position: absolute; top: 0; left: 0; }
+		}
+	}
+
+aside {
+	font-size: 32px; line-height: 1;
+	&.pull-right { margin-right: 9px; }
+	&.pull-left { margin-left: 9px; }
+	> span, > .inline--icon { display: block; }
+	}
+
+.unit { font-size: (20 / 32)*1em; }
+
+
+/* COUNTERS */
+	.counter {
+		@extend %box; display: table; width: 100%; margin-bottom: 15px;
+		> div { display: table-cell; vertical-align: middle; }
+		.control { border-left: 1px solid #eaf2f3; }
+		.indicator { padding: 0 29px 0 13px; }
+		.type { width: 47px; text-align: right; }
+		}
+
+	.counter {
+		.type {
+			.icon { display: inline-block; }
+			}
+		.progress { height: 14px; margin-bottom: 0; @include border-radius(7px); }
+		}
+
+	.progress-bar { background: #9e59d8; }
+/* /end COUNTERS */
+
+
+/* TABS */
+	#more-info { margin: 35px 0; }
+	
+	.nav-tabs {
+		> li {
+			width: 50%; margin-bottom: -5px; font-size: 16px; text-align: center; text-transform: uppercase;
+			> a, > a:hover, > a:focus { height: 45px; margin-right: 0; padding: 0 10px; color: $color-01; line-height: 40px; background-color: #e8f6f8; border: 0; @include box-shadow(inset 0 -9px 4px -4px rgba(0,0,0,.2), inset 5px 0 4px -4px rgba(0,0,0,.2)); }
+			}
+		> li:first-child {
+			> a, > a:hover, > a:focus {
+				@include box-shadow(inset 0 -9px 4px -4px rgba(0,0,0,.2), inset -5px 0 4px -4px rgba(0,0,0,.2));
+				}
+			}
+		> li {
+			&.active {
+				> a, > a:hover, > a:focus { border: 0; color: #839497; @include box-shadow(none); }
+				}
+			}
+		}
+
+	.tab-content { position: relative; @include box-shadow(0 4px 2px rgba(0,0,0,.2)); }
+	.tab-pane {
+		padding: 5px 0;
+		@extend %box;
+		&:first-child { @include border-radius(0 4px 4px 4px); }
+		&:last-child { @include border-radius(4px 0 4px 4px); }
+		}
+/* /end TABS */
+

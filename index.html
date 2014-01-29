@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Healthjam</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="css/healthjam.css" />
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="js/handlebars-v1.3.0.js"></script>
+	</head>
+
+	<body>
+		
+		<header id="app-header">
+			<div class="container">
+				<div class="title">
+					<h1 class="app-title"><a href="#" title="Healthjam">Healthjam</a></h1>
+				</div>
+				<div class="control">
+					<a href="#" title="Search" class="button button--icon-inside"><i class="icon icon--search"></i>Search</a>
+				</div>
+				<div class="control">
+					<a href="#" title="People" class="button button--icon-inside"><i class="icon icon--people"></i>People</a>
+				</div>
+			</div>
+		</header>
+		
+		<section id="app-content" class="container" data-id="0">
+			<section id="controls">
+				<div class="person clearfix">
+					<h1 class="person-name js-name">Tomi Koskinen</h1>
+					<button type="button" class="pull-left btn button--icon icon icon--arrow-left js-change-person" data-direction="prev" title="Previous Person"></button>
+					<button type="button" class="pull-right btn button--icon icon icon--arrow-right js-change-person" data-direction="next" title="Next Person"></button>
+				</div>
+				<div class="btn-group btn-group-full">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						Last month<span class="icon icon--arrow-dropdown"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">Last month</a></li>
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+					</ul>
+				</div>
+			</section>
+			
+			<section id="visual" class="clearfix">
+				<div class="canvas">
+					<img src="img/dummy/person-blank.png" alt="" class="center-block" />
+					<div id="spots"></div>
+				</div>
+				<aside class="pull-left">
+					<span class="inline--icon"><i class="icon icon--heart"></i><span class="js-health">95</span><span class="unit">%</span></span>
+				</aside>
+				<aside class="pull-right">
+					<span class="inline--icon inline--icon-right"><span class="js-bugs">2</span><i class="icon icon--bug"></i></span>
+					<span class="inline--icon inline--icon-right"><span class="js-pills">1</span><i class="icon icon--pill"></i></span>
+				</aside>
+			</section>
+			
+			<section id="counters">
+
+			</section>
+			
+			<section id="more-info">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#list" data-toggle="tab" title="List">List</a></li>
+					<li><a href="#graph" data-toggle="tab" title="Graph">Graph</a></li>
+				</ul>
+
+				<div class="tab-content">
+					<div class="tab-pane active" id="list">
+						<img src="img/dummy/list.png" alt="" />
+					</div>
+					<div class="tab-pane" id="graph">
+						<img src="img/dummy/graph.png" alt="" />
+					</div>
+				</div>
+			
+			</section>
+		</section>
+
+		<script id="spot-template" type="text/x-handlebars-template">
+			{{#each spots}}
+				<i class="icon icon--spot spot--{{@index}}" style="top: {{y}}; left: {{x}};"></i>
+			{{/each}}
+		</script>
+		
+		<script id="counter-template" type="text/x-handlebars-template">
+			{{#each pills}}
+			<div class="counter">
+				<div class="type">
+					<span class="icon icon--pill-blue"></span>
+				</div>
+				<div class="indicator">
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" data-id="{{id}}" data-steps="{{steps}}" data-start="{{start}}" data-value="{{startPlace steps start}}" aria-valuenow="{{startPlace steps start}}" aria-valuemin="0" aria-valuemax="100" style="width: {{startPlace steps start}}%;">
+							<span class="sr-only">{{startPlace steps start}}% Complete</span>
+						</div>
+					</div>
+				</div>
+				<div class="control add">
+					<a href="#" title="Add" class="js-progress button button--icon-inside"><i class="icon icon--plus"></i>Add</a>
+				</div> 
+			</div>
+			{{/each}}
+		</script>
+
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/healthjam.js"></script>
+
+	</body>
+
+</html>
