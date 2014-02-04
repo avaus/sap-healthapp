@@ -4,19 +4,10 @@
   var map;
   var heatMaps = {};
 
-  var $diseaseSelect;
-
   var helsinki = new google.maps.LatLng(60.171007, 24.941475);
   var keilaranta = new google.maps.LatLng(60.173702, 24.828844);
   var leppavaara = new google.maps.LatLng(60.219220, 24.812193);
   var pasila = new google.maps.LatLng(60.198328, 24.934115);
-
-
-  var diseasePreSets = {
-    'ebola': [leppavaara, 0.02, 100],
-    'aids': [keilaranta, 0.001, 200],
-    'commoncold': [helsinki, 0.05, 1000]
-  }
 
   /**
    * Spread should be 0.001 -> 0.05 or some such
@@ -39,35 +30,44 @@
     return new google.maps.visualization.HeatmapLayer({ data: heatMapData });
   }
 
+ function createHeatMap(data) {
+    var points = _.map(data, function(arr) { return { weight: 10, location: new google.maps.LatLng(arr[0], arr[1]) }; });
+    return new google.maps.visualization.HeatmapLayer({ data: points });
+  }
+
   function clearHeatMaps() {
     _.forOwn(heatMaps, function(value, key) {
       value.setMap(null);
     });
   }
 
-  function switchHeatMap(key) {
+  function switchHeatMap(key, label) {
     clearHeatMaps();
 
     if (!heatMaps[key]) {
-      if (diseasePreSets[key]) {
-        heatMaps[key] = createRandomHeatMap.apply(this, diseasePreSets[key]);
-      } else {
-        heatMaps[key] = createRandomHeatMap(helsinki, 0.03, 50 + Math.random() * 200);
-      }
-    } 
+      $.getJSON("data/"+key+".json")
+        .done(function(result) {
+          heatMaps[key] = createHeatMap(result.data);
+        })
+        .fail(function() {
+          heatMaps[key] = createRandomHeatMap(helsinki, 0.03, 50 + Math.random() * 200);
+        })
+        .always(function() {
+          heatMaps[key].setMap(map);
+        })
 
-    heatMaps[key].setMap(map);
-
-    if (diseasePreSets[key]) {
-      map.panTo(diseasePreSets[key][0]);
+    } else {
+      heatMaps[key].setMap(map);
     }
+
+    $('#diseaseLabel').html(label);
   }
 
   function initializeMap() {
     map = new google.maps.Map(document.getElementById('map-canvas'), {
       center: helsinki,
       zoom: 13,
-      mapTypeId: google.maps.MapTypeId.SATELLITE,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
       panControl: false,
       zoomControl: true,
       mapTypeControl: false,
@@ -77,14 +77,16 @@
     });
   }
 
+ 
+
   $(document).ready(function() {
-    $diseaseSelect = $('.disease-select');
-    $diseaseSelect.change(function() {
-      switchHeatMap($diseaseSelect.val());
+    $('.disease-picker').click(function() {
+      console.log("Selecting " + $(this).html());
+      switchHeatMap($(this).data('disease'), $(this).html());
     });
   
     initializeMap();
-    switchHeatMap($diseaseSelect.val());
+    switchHeatMap('lice', 'Lice');
   });
 
 })(window.jQuery, window._);

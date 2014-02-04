@@ -11,25 +11,29 @@
 		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="js/lodash.min.js"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
-		<script type="text/javascript" src="js/map.js"></script>		
+	
 	</head>
 
 	<body>
 		
 		<header id="app-header">
-			<div class="container">
+			<div class="container" style="padding: 0 10px;">
 				<div class="control" style="padding-left: 0; border-right: 0;">
 					<a href="#" title="Back" class="button button--icon-inside"><i class="icon icon--arrow-left"></i>Back</a>
 				</div>
 
-				<select class="disease-select" style="width: 90%; margin-top: 20px;">
-					<option value="syfilis" selected>Syfilis</option>
-					<option value="gonorrhea">Gonorrhea</option>
-					<option value="commoncold">Common Cold</option>
-					<option value="aids">AIDS</option>
-					<option value="ebola">Ebola</option>
-				</select>
-			
+				<div class="btn-group btn-group-full">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+						<span id="diseaseLabel">Lice</span> <span class="icon icon--arrow-dropdown"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right" role="menu">
+						<li><a class="disease-picker" href="#" data-disease="lice">Lice</a></li>
+						<li><a class="disease-picker" href="#" data-disease="cold">Common cold</a></li>
+	                    <li class="divider"></li>
+						<li><a class="disease-picker" href="#" data-disease="other">Other...</a></li>
+					</ul>
+				</div>
+
 			</div>
 		</header>
 
@@ -37,6 +41,9 @@
 			<div id="map-canvas" style="width: 100%; height: 100%"/>
 		</section>
 
+
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/map.js"></script>	
 				
 	</body>
 
