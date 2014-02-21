@@ -190,3 +190,37 @@ aside {
 		}
 /* /end TABS */
 
+
+.recommendations {
+	border-radius: 5px 5px 5px 5px;
+	background: white;
+	overflow: hidden;
+	padding: 10px 0 0 0;
+	p {
+		color: blue;
+		padding: 10px;
+		color: #333;
+		color: #1FA5BE;		
+	}
+	a {
+		color: red;
+		width: 50%;
+		text-align: center;
+		padding: 14px 0;
+		float: left;
+		overflow: hidden;
+		display: block;
+		background: gray;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		border-right: 1px solid #ddd;
+		font-weight: bold;
+		border-top: 1px solid #ddd;
+		background: #f8f8f8;
+		color: #1FA5BE;
+		
+	}	
+}
+
+
